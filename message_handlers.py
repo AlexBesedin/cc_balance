@@ -1,9 +1,19 @@
 import time
-from config import client, TRX_WALLET, priv_key, bot
-from utils import is_valid_wallet_address, is_valid_amount
+from config import (
+    bot,
+    client, 
+    priv_key,
+    TRX_WALLET, 
+    API_KEY_BNB, 
+    BNB_WALLET)
+from utils import (
+    is_valid_wallet_address, 
+    is_valid_amount, 
+    get_balance_bnb)
 
 
 def get_balance_trx(message):
+        """Метод получение баланса TRX кошелька"""
         balance = client.get_account_balance(TRX_WALLET)
         bot.send_message(
             chat_id=message.chat.id,
@@ -11,6 +21,7 @@ def get_balance_trx(message):
     
 
 def send_trx(message):
+    """Метод отправки транзакции TRX"""
     user_message = message.text.split()
     if len(user_message) != 3:
         bot.send_message(
@@ -49,3 +60,12 @@ def send_trx(message):
                 chat_id=message.chat.id,
                 text=f"Средства успешно отправлены.\n "
                 f"Новый баланс кошелька: {balance} TRX")
+            
+            
+def get_bnb_balance(message):
+    """Метод проверки баланса BNB кошелька"""
+    balance = get_balance_bnb(API_KEY_BNB, BNB_WALLET)
+    bot.send_message(
+        chat_id=message.chat.id,
+        text=f'Текущий баланс: {balance:.4f} BNB')
+    
