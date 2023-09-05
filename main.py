@@ -1,4 +1,9 @@
-from message_handlers import get_balance_trx, send_trx, get_bnb_balance
+from message_handlers import (
+    get_balance_trx, 
+    send_trx, 
+    get_bnb_balance,
+    get_info,
+    send_bnb)
 from config import bot
 
 
@@ -16,8 +21,23 @@ def trx_send_command_handler(message):
 
 @bot.message_handler(commands=['bnb_balance'])
 def bnb_balance_command_handler(message):
+    """Хендлер команды /bnb_balance"""
     get_bnb_balance(message)
     
+
+@bot.message_handler(commands=['info'])
+def info_command_handler(message):
+    """Хендлер команды /info"""
+    get_info(message)
+    
+
+@bot.message_handler(commands=['send_bnb'])
+def bnb_send_command_handler(message):
+    """Хендлер команды /send_bnb"""
+    send_bnb(message)    
+    
+
+
 
 def main():
     bot.polling()
